@@ -28,3 +28,7 @@ body {
   background-repeat: no-repeat;
   height: 87vh;
 }
+
+.btn {
+  @apply bg-buttonBg h-10 text-white text-center rounded-md;
+}

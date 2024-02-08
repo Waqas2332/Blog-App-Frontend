@@ -20,9 +20,7 @@ export default function Header() {
           <Link to="/">Categories</Link>
           <Link to="/">About</Link>
           <Link to="/">Contact Us</Link>
-          <button className="bg-buttonBg w-20 h-10 text-white text-center rounded-md">
-            Login
-          </button>
+          <button className="btn w-20">Login</button>
         </div>
       </nav>
     </section>
