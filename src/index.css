@@ -14,3 +14,17 @@ body {
   background-color: #b6b8d6;
   min-height: 100vh;
 }
+
+.hero {
+  background-image: linear-gradient(
+      to top left,
+      rgba(182, 184, 214, 0.2),
+      rgba(126, 120, 210, 0.4)
+    ),
+    url("../public/assets/hero-bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 87vh;
+}
