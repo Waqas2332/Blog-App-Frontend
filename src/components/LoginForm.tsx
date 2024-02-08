@@ -46,7 +46,7 @@ const LoginForm: React.FC = () => {
         }}
       >
         {({ isSubmitting }) => (
-          <Form className="font-bodyFont form rounded px-8 pt-6 pb-8 mb-4 w-1/3">
+          <Form className="font-bodyFont form rounded px-8 pt-6 pb-8 mb-4 lg:w-1/3">
             <div className="mb-4">
               <label htmlFor="email" className="block  text-sm font-bold mb-2">
                 Email
