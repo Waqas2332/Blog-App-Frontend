@@ -20,7 +20,9 @@ export default function Header() {
           <Link to="/">Categories</Link>
           <Link to="/">About</Link>
           <Link to="/">Contact Us</Link>
-          <button className="btn w-20">Login</button>
+          <button className="btn w-20">
+            <Link to="/auth/login">Login</Link>
+          </button>
         </div>
       </nav>
     </section>
