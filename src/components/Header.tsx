@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
+import { useAppSelector } from "../redux/hooks";
 
 export default function Header() {
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   return (
     <section className="w-full bg-primaryBackground">
       <nav className="w-[90%] flex justify-between items-center m-auto p-4">
@@ -20,9 +22,13 @@ export default function Header() {
           <Link to="/">Categories</Link>
           <Link to="/">About</Link>
           <Link to="/">Contact Us</Link>
-          <button className="btn w-20">
-            <Link to="/auth/login">Login</Link>
-          </button>
+          {isAuthenticated ? (
+            <button className="btn w-20">Logout</button>
+          ) : (
+            <button className="btn w-20">
+              <Link to="/auth/login">Login</Link>
+            </button>
+          )}
         </div>
       </nav>
     </section>

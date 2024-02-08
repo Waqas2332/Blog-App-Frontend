@@ -2,6 +2,8 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from "axios";
 import Spinner from "./Spinner";
+import { useAppDispatch } from "../redux/hooks";
+import { login } from "../redux/slices/auth-slice";
 
 interface FormValues {
   email: string;
@@ -9,6 +11,8 @@ interface FormValues {
 }
 
 const LoginForm: React.FC = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="flex justify-center items-center hero h-screen">
       <Formik
@@ -33,7 +37,7 @@ const LoginForm: React.FC = () => {
               "http://localhost:5000/api/auth/login",
               values
             );
-            sessionStorage.setItem("token", response.data.token);
+            dispatch(login(response.data.token));
           } catch (error) {
             console.log(error);
           } finally {

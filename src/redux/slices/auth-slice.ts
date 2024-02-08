@@ -15,7 +15,14 @@ const initialState: initialState = sessionStorage.getItem("authState")
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    login: (state, action) => {
+      state.isAuthenticated = true;
+      state.user = action.payload;
+      sessionStorage.setItem("authState", JSON.stringify(state));
+    },
+  },
 });
 
 export default authSlice.reducer;
+export const { login } = authSlice.actions;
