@@ -2,7 +2,7 @@ export default function Hero() {
   return (
     <header className="hero flex flex-col justify-center font-bodyFont">
       <div className="w-[90%] m-auto">
-        <div className="w-[40%]">
+        <div className="md:w-[40%] max-md:text-center">
           <h2 className="text-3xl">
             Explore the Depths of Knowledge with
             <span className="font-headingFont"> Insightful Pages</span>
