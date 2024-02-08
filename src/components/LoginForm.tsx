@@ -1,5 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import axios from "axios";
+import Spinner from "./Spinner";
 
 interface FormValues {
   email: string;
@@ -25,11 +27,18 @@ const LoginForm: React.FC = () => {
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            const response = await axios.post(
+              "http://localhost:5000/api/auth/login",
+              values
+            );
+            sessionStorage.setItem("token", response.data.token);
+          } catch (error) {
+            console.log(error);
+          } finally {
             setSubmitting(false);
-          }, 400);
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -75,9 +84,9 @@ const LoginForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn w-20"
+                className="btn w-20 flex justify-center items-center"
               >
-                {isSubmitting ? "Submitting..." : "Sign In"}
+                {isSubmitting ? <Spinner /> : "Sign In"}
               </button>
             </div>
           </Form>
