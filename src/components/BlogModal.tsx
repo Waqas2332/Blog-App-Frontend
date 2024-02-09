@@ -1,5 +1,7 @@
 import { FormEvent, Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import axios from "axios";
+import { useAppSelector } from "../redux/hooks";
 
 type AddBlogModalProps = {
   isOpen: boolean;
@@ -7,11 +9,12 @@ type AddBlogModalProps = {
   content: string;
 };
 
-const AddBlogModal = ({ isOpen, onClose }: AddBlogModalProps) => {
+const AddBlogModal = ({ isOpen, onClose, content }: AddBlogModalProps) => {
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const user = useAppSelector((state) => state.auth.user);
 
   const commonCategories = [
     "Technology",
@@ -26,11 +29,25 @@ const AddBlogModal = ({ isOpen, onClose }: AddBlogModalProps) => {
     "Sports",
   ];
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Handle form submission, e.g., send data to backend
-    console.log({ title, categories, tags });
-    onClose();
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/blogs/add-blog",
+        { title, categories, tags, content },
+        {
+          headers: {
+            Authorization: user,
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      onClose();
+    }
+    console.log();
   };
 
   const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
