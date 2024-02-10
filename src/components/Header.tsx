@@ -74,7 +74,11 @@ export default function Header() {
                 <Link to="/" onClick={handleLinkClick} className="block">
                   Home
                 </Link>
-                <Link to="/" onClick={handleLinkClick} className="block">
+                <Link
+                  to="/blog/add-blog"
+                  onClick={handleLinkClick}
+                  className="block"
+                >
                   Blogs
                 </Link>
                 <Link to="/" onClick={handleLinkClick} className="block">
