@@ -22,7 +22,6 @@ const AddBlogModal = ({ isOpen, onClose, content }: AddBlogModalProps) => {
     "Travel",
     "Food",
     "Fashion",
-    "Fitness",
     "Books",
     "Movies",
     "Music",
