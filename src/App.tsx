@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import NewBlog from "./pages/NewBlog";
+import Register from "./pages/Register";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/blog/add-blog" element={<NewBlog />} />
+        <Route path="/auth/register" element={<Register />} />
       </Routes>
     </>
   );

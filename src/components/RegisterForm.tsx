@@ -7,19 +7,27 @@ import { login } from "../redux/slices/auth-slice";
 import { Link } from "react-router-dom";
 
 interface FormValues {
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 }
 
-const LoginForm: React.FC = () => {
+const RegisterForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="flex justify-center items-center hero h-screen">
+    <div className="flex justify-center items-center hero min-h-screen pb-10">
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
         validate={(values) => {
           const errors: Partial<FormValues> = {};
+          if (!values.firstName) {
+            errors.firstName = "Please enter your first name";
+          }
+          if (!values.lastName) {
+            errors.lastName = "Please enter your last name";
+          }
           if (!values.email) {
             errors.email = "Email is required";
           } else if (
@@ -35,7 +43,7 @@ const LoginForm: React.FC = () => {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const response = await axios.post(
-              "http://localhost:5000/api/auth/login",
+              "http://localhost:5000/api/auth/register",
               values
             );
             dispatch(login(response.data.token));
@@ -47,7 +55,47 @@ const LoginForm: React.FC = () => {
         }}
       >
         {({ isSubmitting }) => (
-          <Form className="font-bodyFont form rounded px-8 pt-6 pb-8 mb-4 lg:w-1/3">
+          <Form className="font-bodyFont form rounded mt-20 px-8 pt-6 pb-8  lg:w-1/3">
+            <div className="mb-4">
+              <label
+                htmlFor="firstName"
+                className="block  text-sm font-bold mb-2"
+              >
+                First Name
+              </label>
+              <Field
+                type="text"
+                name="firstName"
+                id="firstName"
+                placeholder="First Name"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+              />
+              <ErrorMessage
+                name="firstName"
+                component="div"
+                className="text-red-800 text-xs italic"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="lastName"
+                className="block  text-sm font-bold mb-2"
+              >
+                Last Name
+              </label>
+              <Field
+                type="text"
+                name="lastName"
+                id="lastName"
+                placeholder="Last Name"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+              />
+              <ErrorMessage
+                name="lastName"
+                component="div"
+                className="text-red-800 text-xs italic"
+              />
+            </div>
             <div className="mb-4">
               <label htmlFor="email" className="block  text-sm font-bold mb-2">
                 Email
@@ -91,12 +139,13 @@ const LoginForm: React.FC = () => {
                 disabled={isSubmitting}
                 className="btn w-20 flex justify-center items-center"
               >
-                {isSubmitting ? <Spinner /> : "Sign In"}
+                {isSubmitting ? <Spinner /> : "Register"}
               </button>
             </div>
             <div className="text-center mt-4 text-sm">
-              <Link to="/auth/register">
-                Don't have an account ? <span className="italic">Sign up</span>
+              <Link to="/auth/login">
+                Already have an account ?{" "}
+                <span className="italic">Sign in</span>
               </Link>
             </div>
           </Form>
@@ -106,4 +155,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
