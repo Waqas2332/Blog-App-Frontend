@@ -8,9 +8,12 @@ import {
 } from "react-icons/md";
 import { SiYourtraveldottv } from "react-icons/si";
 import { GiBallerinaShoes, GiBookshelf, GiMusicalNotes } from "react-icons/gi";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useAppSelector } from "../redux/hooks";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import Spinner from "./Spinner";
+import { ErrorResponse } from "../types/error";
 
 type Category = {
   name: string;
@@ -19,6 +22,7 @@ type Category = {
 
 export default function InterestList() {
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
@@ -53,7 +57,12 @@ export default function InterestList() {
       (category) => commonCategories[category].name
     );
 
+    if (preferences.length < 3) {
+      toast.error("Please choose at least 3 categories");
+      return;
+    }
     try {
+      setIsLoading(true);
       const response = await axios.post(
         "https://blog-waqasdev.onrender.com/api/user-preferences",
         { preferences },
@@ -63,10 +72,17 @@ export default function InterestList() {
           },
         }
       );
-      console.log(response);
+      toast.success(response.data.message);
       navigate("/feed");
     } catch (error) {
-      console.log(error);
+      const axiosError = error as AxiosError<ErrorResponse>;
+      if (axiosError.response && axiosError.response.data) {
+        toast.error(axiosError.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,7 +93,8 @@ export default function InterestList() {
           Welcome to <span className="font-headingFont">Insightful Pages</span>
         </h2>
         <p className="capitalize">
-          Choose your interests and personalize your feed with topics you love
+          Choose your interests and personalize your feed with topics you love{" "}
+          <small>( Choose at least 3 )</small>
         </p>
       </div>
       <div className="flex gap-2 flex-wrap justify-center w-[100%] mt-8">
@@ -97,8 +114,12 @@ export default function InterestList() {
         ))}
       </div>
       <div>
-        <button onClick={handleAddPreferences} className="btn w-20 mb-8">
-          Done
+        <button
+          onClick={handleAddPreferences}
+          disabled={isLoading}
+          className="btn w-20 mb-8"
+        >
+          {isLoading ? <Spinner /> : "Done"}
         </button>
       </div>
     </section>

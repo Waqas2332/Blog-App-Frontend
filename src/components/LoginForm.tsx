@@ -1,10 +1,12 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Spinner from "./Spinner";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/slices/auth-slice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { ErrorResponse } from "../types/error";
 
 interface FormValues {
   email: string;
@@ -13,6 +15,7 @@ interface FormValues {
 
 const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className="flex justify-center items-center hero h-screen">
@@ -39,8 +42,15 @@ const LoginForm: React.FC = () => {
               values
             );
             dispatch(login(response.data.token));
+            toast.success("Sign in successfully");
+            navigate("/feed");
           } catch (error) {
-            console.log(error);
+            const axiosError = error as AxiosError<ErrorResponse>;
+            if (axiosError.response && axiosError.response.data) {
+              toast.error(axiosError.response.data.message);
+            } else {
+              toast.error("An unexpected error occurred.");
+            }
           } finally {
             setSubmitting(false);
           }

@@ -1,10 +1,11 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Spinner from "./Spinner";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/slices/auth-slice";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface FormValues {
   firstName: string;
@@ -12,6 +13,11 @@ interface FormValues {
   email: string;
   password: string;
 }
+
+type ErrorResponse = {
+  message: string;
+  ok: boolean;
+};
 
 const RegisterForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -48,9 +54,15 @@ const RegisterForm: React.FC = () => {
               values
             );
             dispatch(login(response.data.token));
+            toast.success("Registered successfully");
             naviagte("/welcome");
           } catch (error) {
-            console.log(error);
+            const axiosError = error as AxiosError<ErrorResponse>;
+            if (axiosError.response && axiosError.response.data) {
+              toast.error(axiosError.response.data.message);
+            } else {
+              toast.error("An unexpected error occurred.");
+            }
           } finally {
             setSubmitting(false);
           }

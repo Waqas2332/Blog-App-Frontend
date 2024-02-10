@@ -1,7 +1,9 @@
 import { FormEvent, Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useAppSelector } from "../redux/hooks";
+import { toast } from "sonner";
+import { ErrorResponse } from "../types/error";
 
 type AddBlogModalProps = {
   isOpen: boolean;
@@ -28,8 +30,31 @@ const AddBlogModal = ({ isOpen, onClose, content }: AddBlogModalProps) => {
     "Sports",
   ];
 
+  const validateForm = () => {
+    const error = [];
+    if (content == "") {
+      error.push("Please enter some content");
+    }
+    if (title == "") {
+      error.push("Please give some title");
+    }
+    if (categories == "") {
+      error.push("Please choose any category");
+    }
+    if (tags.length === 0) {
+      error.push("Please give at least one tag");
+    }
+    return error[0];
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const error = validateForm();
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
     try {
       const response = await axios.post(
         "https://blog-waqasdev.onrender.com/api/blogs/add-blog",
@@ -40,9 +65,14 @@ const AddBlogModal = ({ isOpen, onClose, content }: AddBlogModalProps) => {
           },
         }
       );
-      console.log(response);
+      toast.success(response.data.message);
     } catch (error) {
-      console.log(error);
+      const axiosError = error as AxiosError<ErrorResponse>;
+      if (axiosError.response && axiosError.response.data) {
+        toast.error(axiosError.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     } finally {
       onClose();
     }

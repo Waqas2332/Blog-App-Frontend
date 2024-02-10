@@ -6,11 +6,13 @@ import NewBlog from "./pages/NewBlog";
 import Register from "./pages/Register";
 import UserInterest from "./pages/UserInterest";
 import Feed from "./pages/Feed";
+import { Toaster } from "sonner";
 
 export default function App() {
   return (
     <>
       <Header />
+      <Toaster richColors />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth/login" element={<Login />} />
