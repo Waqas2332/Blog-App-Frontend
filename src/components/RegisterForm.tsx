@@ -44,7 +44,7 @@ const RegisterForm: React.FC = () => {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const response = await axios.post(
-              "http://localhost:5000/api/auth/register",
+              "https://blog-waqasdev.onrender.com/api/auth/register",
               values
             );
             dispatch(login(response.data.token));

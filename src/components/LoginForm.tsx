@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const response = await axios.post(
-              "http://localhost:5000/api/auth/login",
+              "https://blog-waqasdev.onrender.com/api/auth/login",
               values
             );
             dispatch(login(response.data.token));

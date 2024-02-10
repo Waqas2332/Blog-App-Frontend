@@ -32,7 +32,7 @@ const AddBlogModal = ({ isOpen, onClose, content }: AddBlogModalProps) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/blogs/add-blog",
+        "https://blog-waqasdev.onrender.com/api/blogs/add-blog",
         { title, categories, tags, content },
         {
           headers: {

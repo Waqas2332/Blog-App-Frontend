@@ -55,7 +55,7 @@ export default function InterestList() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/user-preferences",
+        "https://blog-waqasdev.onrender.com/api/user-preferences",
         { preferences },
         {
           headers: {
