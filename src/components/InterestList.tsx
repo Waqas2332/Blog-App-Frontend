@@ -10,6 +10,7 @@ import { SiYourtraveldottv } from "react-icons/si";
 import { GiBallerinaShoes, GiBookshelf, GiMusicalNotes } from "react-icons/gi";
 import axios from "axios";
 import { useAppSelector } from "../redux/hooks";
+import { useNavigate } from "react-router-dom";
 
 type Category = {
   name: string;
@@ -19,6 +20,7 @@ type Category = {
 export default function InterestList() {
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const user = useAppSelector((state) => state.auth.user);
+  const navigate = useNavigate();
 
   const commonCategories: Category[] = [
     { name: "Technology", icon: <MdBiotech /> },
@@ -62,6 +64,7 @@ export default function InterestList() {
         }
       );
       console.log(response);
+      navigate("/feed");
     } catch (error) {
       console.log(error);
     }

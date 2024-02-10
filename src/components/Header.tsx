@@ -34,7 +34,7 @@ export default function Header() {
         </div>
         <div className="space-x-4 font-bodyFont max-[760px]:hidden">
           <Link to="/">Home</Link>
-          <Link to="/">Blogs</Link>
+          <Link to="/blog/add-blog">Blogs</Link>
           <Link to="/">Categories</Link>
           <Link to="/">Contact Us</Link>
           {isAuthenticated ? (

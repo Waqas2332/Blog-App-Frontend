@@ -4,7 +4,7 @@ import axios from "axios";
 import Spinner from "./Spinner";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/slices/auth-slice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface FormValues {
   firstName: string;
@@ -15,6 +15,7 @@ interface FormValues {
 
 const RegisterForm: React.FC = () => {
   const dispatch = useAppDispatch();
+  const naviagte = useNavigate();
 
   return (
     <div className="flex justify-center items-center hero min-h-screen pb-10">
@@ -47,6 +48,7 @@ const RegisterForm: React.FC = () => {
               values
             );
             dispatch(login(response.data.token));
+            naviagte("/welcome");
           } catch (error) {
             console.log(error);
           } finally {
