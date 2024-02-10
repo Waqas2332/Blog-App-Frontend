@@ -8,6 +8,8 @@ import {
 } from "react-icons/md";
 import { SiYourtraveldottv } from "react-icons/si";
 import { GiBallerinaShoes, GiBookshelf, GiMusicalNotes } from "react-icons/gi";
+import axios from "axios";
+import { useAppSelector } from "../redux/hooks";
 
 type Category = {
   name: string;
@@ -16,6 +18,7 @@ type Category = {
 
 export default function InterestList() {
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  const user = useAppSelector((state) => state.auth.user);
 
   const commonCategories: Category[] = [
     { name: "Technology", icon: <MdBiotech /> },
@@ -41,6 +44,27 @@ export default function InterestList() {
 
   const isCategorySelected = (index: number) => {
     return selectedCategories.includes(index);
+  };
+
+  const handleAddPreferences = async () => {
+    const preferences = selectedCategories.map(
+      (category) => commonCategories[category].name
+    );
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/user-preferences",
+        { preferences },
+        {
+          headers: {
+            Authorization: user,
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -70,7 +94,9 @@ export default function InterestList() {
         ))}
       </div>
       <div>
-        <button className="btn w-20 mb-8">Done</button>
+        <button onClick={handleAddPreferences} className="btn w-20 mb-8">
+          Done
+        </button>
       </div>
     </section>
   );
