@@ -21,7 +21,7 @@ export default function SingleBlog() {
     __v: 0,
     _id: "",
     likes: 0,
-    comments: ["nothing"],
+    comments: [],
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +29,7 @@ export default function SingleBlog() {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `http://localhost:8000/api/blogs/fetch-blogs/${id}`,
+        `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs/${id}`,
         {
           headers: {
             Authorization: token,
@@ -47,7 +47,7 @@ export default function SingleBlog() {
   async function addComment(comment: string) {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/blogs/fetch-blogs/${blog._id}/comment`,
+        `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs/${blog._id}/comment`,
         { comment },
         {
           headers: {

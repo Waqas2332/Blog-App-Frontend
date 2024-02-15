@@ -15,7 +15,11 @@ export type Blog = {
   updatedAt: string;
   __v: number;
   _id: string;
-  comments: [string];
+  comments: {
+    text: string;
+    createdAt: string;
+    author: { firstName: string };
+  }[];
   likes: number;
 };
 
