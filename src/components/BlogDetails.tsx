@@ -1,11 +1,16 @@
-import React from "react";
+import axios, { AxiosError } from "axios";
+import React, { useState } from "react";
 import { SlLike } from "react-icons/sl";
+import { ErrorResponse } from "react-router-dom";
+import { toast } from "sonner";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 interface BlogDetailProps {
   title?: string;
   content?: string;
   likes?: number;
   comments?: string[];
+  id?: string;
 }
 
 const BlogDetail: React.FC<BlogDetailProps> = ({
@@ -13,7 +18,35 @@ const BlogDetail: React.FC<BlogDetailProps> = ({
   content,
   likes,
   comments,
+  id,
 }) => {
+  const [like, setLike] = useState(likes);
+  const token = useAppSelector((state) => state.auth.user);
+
+  async function handleLikes() {
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/blogs/fetch-blogs/${id}/like`,
+        {},
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setLike((prevState) => prevState! + 1);
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError<ErrorResponse>;
+      if (axiosError.response && axiosError.response.data) {
+        toast.error(axiosError.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+    }
+  }
+
   return (
     <div className="container mx-auto p-4">
       {/* Blog Title */}
@@ -27,8 +60,8 @@ const BlogDetail: React.FC<BlogDetailProps> = ({
 
       {/* Likes */}
       <div className="flex items-center mb-4 gap-2">
-        <SlLike className="cursor-pointer" />
-        <span>{likes} Likes</span>
+        <SlLike className="cursor-pointer" onClick={handleLikes} />
+        <span>{like} Likes</span>
       </div>
 
       {/* Comments Section */}

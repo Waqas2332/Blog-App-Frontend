@@ -47,6 +47,7 @@ export default function SingleBlog() {
           comments={[]}
           content={blog?.content}
           likes={blog?.likes}
+          id={blog?._id}
         />
       )}
     </div>
