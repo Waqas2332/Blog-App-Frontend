@@ -1,5 +1,6 @@
 import { RxMagicWand } from "react-icons/rx";
-import { MdOutlineCategory, MdOutlineCloseFullscreen } from "react-icons/md";
+import { MdOutlineCloseFullscreen } from "react-icons/md";
+import { IoPersonOutline } from "react-icons/io5";
 import { toast } from "sonner";
 
 type BlogHeaderProps = {
@@ -59,8 +60,8 @@ export default function BlogHeader({
         }}
         className="flex text-sm gap-2 justify-center items-center cursor-pointer"
       >
-        <MdOutlineCategory />
-        Categories
+        <IoPersonOutline />
+        You
       </div>
     </section>
   );
