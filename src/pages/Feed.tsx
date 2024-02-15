@@ -40,7 +40,7 @@ export default function Feed() {
   };
   useEffect(() => {
     preferenceFetchBlogs(
-      `http://localhost:8000/api/blogs/fetch-blogs?preference=${preference}`
+      `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs?preference=${preference}`
     );
   }, []);
   return (

@@ -25,7 +25,7 @@ export default function BlogHeader({
     if (!preference) {
       setPreference(true);
       fetchBlogs(
-        `http://localhost:8000/api/blogs/fetch-blogs?preference=${preference}`
+        `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs?preference=${preference}`
       );
     } else {
       toast.info("Already Personalized");
@@ -36,7 +36,7 @@ export default function BlogHeader({
     if (preference || user) {
       setUser(false);
       setPreference(false);
-      fetchBlogs(`http://localhost:8000/api/blogs/fetch-blogs`);
+      fetchBlogs(`https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs`);
     } else {
       toast.info("Already all posts");
     }
@@ -47,7 +47,9 @@ export default function BlogHeader({
       setPreference(false);
     }
     setUser(true);
-    fetchBlogs(`http://localhost:8000/api/blogs/fetch-blogs?user=${true}`);
+    fetchBlogs(
+      `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs?user=${true}`
+    );
   }
 
   return (

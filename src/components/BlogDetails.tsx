@@ -26,7 +26,7 @@ const BlogDetail: React.FC<BlogDetailProps> = ({
   async function handleLikes() {
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/blogs/fetch-blogs/${id}/like`,
+        `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs/${id}/like`,
         {},
         {
           headers: {

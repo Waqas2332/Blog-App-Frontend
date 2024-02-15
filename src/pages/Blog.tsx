@@ -17,7 +17,7 @@ export default function SingleBlog() {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `http://localhost:8000/api/blogs/fetch-blogs/${id}`,
+        `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs/${id}`,
         {
           headers: {
             Authorization: token,
