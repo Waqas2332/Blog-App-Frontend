@@ -25,6 +25,7 @@ export default function Feed() {
 
   const preferenceFetchBlogs = async (api: string) => {
     try {
+      setBlogs([]);
       const response = await axios.get(api, {
         headers: {
           Authorization: token,
@@ -38,7 +39,7 @@ export default function Feed() {
   };
   useEffect(() => {
     preferenceFetchBlogs(
-      `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs?preference=${preference}`
+      `http://localhost:8000/api/blogs/fetch-blogs?preference=${preference}`
     );
   }, []);
   return (

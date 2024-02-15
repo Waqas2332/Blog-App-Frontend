@@ -17,7 +17,7 @@ export default function BlogHeader({
     if (!preference) {
       setPreference(true);
       fetchBlogs(
-        `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs?preference=${preference}`
+        `http://localhost:8000/api/blogs/fetch-blogs?preference=${preference}`
       );
     } else {
       toast.info("Already Personalized");
@@ -27,7 +27,7 @@ export default function BlogHeader({
   function handleAllClick() {
     if (preference) {
       setPreference(false);
-      fetchBlogs(`https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs`);
+      fetchBlogs(`http://localhost:8000/api/blogs/fetch-blogs`);
     } else {
       toast.info("Already all posts");
     }
