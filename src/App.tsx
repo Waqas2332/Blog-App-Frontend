@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import UserInterest from "./pages/UserInterest";
 import Feed from "./pages/Feed";
 import { Toaster } from "sonner";
+import Blog from "./pages/Blog";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/auth/register" element={<Register />} />
         <Route path="/welcome" element={<UserInterest />} />
         <Route path="/feed" element={<Feed />} />
+        <Route path="/feed/:id" element={<Blog />} />
       </Routes>
     </>
   );

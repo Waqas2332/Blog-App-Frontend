@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Blog } from "../pages/Feed";
 import { SlLike } from "react-icons/sl";
 
@@ -6,12 +7,21 @@ type BlogListProps = {
 };
 
 export default function BlogList({ blogs }: BlogListProps) {
+  const navigate = useNavigate();
+
+  function handleBlogClick(id: string) {
+    navigate(`/feed/${id}`);
+  }
+
   return (
     <section className="flex lg:w-[50%] w-[90%] justify-between flex-col">
       {blogs.map((blog) => (
         <div
+          onClick={() => {
+            handleBlogClick(blog._id);
+          }}
           key={blog._id}
-          className="flex flex-row max-sm:flex-col mb-8 w-full rounded-md border-2 border-buttonBg"
+          className="flex cursor-pointer flex-row max-sm:flex-col mb-8 w-full rounded-md border-2 border-buttonBg"
         >
           <div className="w-56 max-sm:w-[100%]">
             <img
