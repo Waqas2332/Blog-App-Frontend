@@ -7,14 +7,21 @@ type BlogHeaderProps = {
   preference: boolean;
   setPreference: React.Dispatch<React.SetStateAction<boolean>>;
   fetchBlogs: (api: string) => void;
+  setUser: React.Dispatch<React.SetStateAction<boolean>>;
+  user: boolean;
 };
 
 export default function BlogHeader({
   preference,
   setPreference,
   fetchBlogs,
+  user,
+  setUser,
 }: BlogHeaderProps) {
   function handlePreferenceClick() {
+    if (user) {
+      setUser(false);
+    }
     if (!preference) {
       setPreference(true);
       fetchBlogs(
@@ -26,12 +33,21 @@ export default function BlogHeader({
   }
 
   function handleAllClick() {
-    if (preference) {
+    if (preference || user) {
+      setUser(false);
       setPreference(false);
       fetchBlogs(`http://localhost:8000/api/blogs/fetch-blogs`);
     } else {
       toast.info("Already all posts");
     }
+  }
+
+  function handleYouClick() {
+    if (preference) {
+      setPreference(false);
+    }
+    setUser(true);
+    fetchBlogs(`http://localhost:8000/api/blogs/fetch-blogs?user=${true}`);
   }
 
   return (
@@ -48,17 +64,17 @@ export default function BlogHeader({
       <div
         onClick={handleAllClick}
         className={`flex gap-2 ${
-          !preference ? "text-buttonBg border-2 border-buttonBg" : ""
+          !user && !preference ? "text-buttonBg border-2 border-buttonBg" : ""
         } rounded-md p-1 text-sm justify-center items-center cursor-pointer`}
       >
         <MdOutlineCloseFullscreen />
         All
       </div>
       <div
-        onClick={() => {
-          toast.info("Under development");
-        }}
-        className="flex text-sm gap-2 justify-center items-center cursor-pointer"
+        onClick={handleYouClick}
+        className={`flex gap-2 ${
+          user ? "text-buttonBg border-2 border-buttonBg" : ""
+        } rounded-md p-1 text-sm justify-center items-center cursor-pointer`}
       >
         <IoPersonOutline />
         You

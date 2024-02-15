@@ -21,6 +21,7 @@ export type Blog = {
 export default function Feed() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [preference, setPreference] = useState(true);
+  const [user, setUser] = useState(false);
   const token = useAppSelector((state) => state.auth.user);
 
   const preferenceFetchBlogs = async (api: string) => {
@@ -48,6 +49,8 @@ export default function Feed() {
         preference={preference}
         setPreference={setPreference}
         fetchBlogs={preferenceFetchBlogs}
+        user={user}
+        setUser={setUser}
       />
       {blogs.length == 0 ? <Spinner /> : <BlogList blogs={blogs} />}
     </section>
