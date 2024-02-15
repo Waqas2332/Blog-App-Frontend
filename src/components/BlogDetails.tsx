@@ -1,9 +1,9 @@
 import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { SlLike } from "react-icons/sl";
-import { ErrorResponse } from "react-router-dom";
+import { ErrorResponse } from "../types/error";
 import { toast } from "sonner";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../redux/hooks";
 
 interface BlogDetailProps {
   title?: string;
