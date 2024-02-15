@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Blog } from "../pages/Feed";
 import { SlLike } from "react-icons/sl";
+import TimeAgo from "./TimeAgo";
 
 type BlogListProps = {
   blogs: Blog[];
@@ -32,6 +33,9 @@ export default function BlogList({ blogs }: BlogListProps) {
           </div>
           <div className="flex-1 flex flex-col max-sm:mt-4 justify-center px-4">
             <p className="text-lg font-bold mb-2">{blog.title}</p>
+            <p className="text-sm text-gray-500">
+              Posted <TimeAgo date={blog.createdAt} />
+            </p>
             <div className="mt-8 max-sm:mb-4">
               <p>Author : {blog.author}</p>
               <p className="text-sm">Tags : {blog.tags.join(",")} </p>

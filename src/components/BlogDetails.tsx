@@ -1,16 +1,18 @@
 import axios, { AxiosError } from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { SlLike } from "react-icons/sl";
 import { ErrorResponse } from "../types/error";
 import { toast } from "sonner";
 import { useAppSelector } from "../redux/hooks";
 
 interface BlogDetailProps {
-  title?: string;
-  content?: string;
-  likes?: number;
-  comments?: string[];
-  id?: string;
+  title: string;
+  content: string;
+  likes: number;
+  comments: string[];
+  id: string;
+  createdAt: string;
+  addComment: (comment: string) => Promise<void>;
 }
 
 const BlogDetail: React.FC<BlogDetailProps> = ({
@@ -19,8 +21,10 @@ const BlogDetail: React.FC<BlogDetailProps> = ({
   likes,
   comments,
   id,
+  addComment,
 }) => {
   const [like, setLike] = useState(likes);
+  const commentRef = useRef<HTMLInputElement>(null);
   const token = useAppSelector((state) => state.auth.user);
 
   async function handleLikes() {
@@ -47,10 +51,20 @@ const BlogDetail: React.FC<BlogDetailProps> = ({
     }
   }
 
+  function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    addComment(commentRef.current!.value);
+  }
+
   return (
     <div className="container mx-auto p-4">
       {/* Blog Title */}
-      <h1 className="text-3xl text-center font-bold mb-4">{title}</h1>
+      <div className="mb-4">
+        <h1 className="text-3xl text-center font-bold">{title}</h1>
+        {/* <p className="text-sm text-center text-gray-500">
+          ( Posted <TimeAgo date={createdAt} /> )
+        </p> */}
+      </div>
 
       {/* Blog Content */}
       <div
@@ -67,16 +81,14 @@ const BlogDetail: React.FC<BlogDetailProps> = ({
       {/* Comments Section */}
       <h2 className="text-xl font-semibold mb-2">Comments</h2>
       {/* Add comment form */}
-      <form className="flex items-center">
+      <form onSubmit={handleSubmit} className="flex items-center">
         <input
           type="text"
           placeholder="Add a comment..."
-          className="border border-gray-300 px-3 py-2 rounded-md flex-grow mr-2"
+          ref={commentRef}
+          className=" bg-transparent border border-b-black border-t-0 border-l-0 border-r-0 outline-none px-3 py-2 flex-grow mr-2"
         />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
-        >
+        <button type="submit" className="btn text-white px-4 py-2 rounded-md">
           Post
         </button>
       </form>

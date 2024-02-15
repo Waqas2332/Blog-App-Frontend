@@ -15,6 +15,7 @@ export type Blog = {
   updatedAt: string;
   __v: number;
   _id: string;
+  comments: [string];
   likes: number;
 };
 

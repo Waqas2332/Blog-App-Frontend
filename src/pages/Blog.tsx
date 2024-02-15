@@ -10,14 +10,26 @@ export default function SingleBlog() {
   const params = useParams();
   const { id } = params;
   const token = useAppSelector((state) => state.auth.user);
-  const [blog, setBlog] = useState<Blog>();
+  const [blog, setBlog] = useState<Blog>({
+    author: "",
+    category: "",
+    content: "",
+    createdAt: "",
+    tags: ["nothing"],
+    title: "",
+    updatedAt: "",
+    __v: 0,
+    _id: "",
+    likes: 0,
+    comments: ["nothing"],
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   async function fetchBlog() {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `https://blog-waqasdev.onrender.com/api/blogs/fetch-blogs/${id}`,
+        `http://localhost:8000/api/blogs/fetch-blogs/${id}`,
         {
           headers: {
             Authorization: token,
@@ -32,6 +44,25 @@ export default function SingleBlog() {
     }
   }
 
+  async function addComment(comment: string) {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/blogs/fetch-blogs/${blog._id}/comment`,
+        { comment },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      if (response.data.ok) {
+        fetchBlog();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     fetchBlog();
   }, []);
@@ -42,12 +73,14 @@ export default function SingleBlog() {
         <Spinner />
       ) : (
         <BlogDetail
-          key={blog?._id}
-          title={blog?.title}
-          comments={[]}
-          content={blog?.content}
-          likes={blog?.likes}
-          id={blog?._id}
+          key={blog._id}
+          title={blog.title}
+          comments={blog.comments}
+          content={blog.content}
+          likes={blog.likes}
+          id={blog._id}
+          createdAt={blog.createdAt}
+          addComment={addComment}
         />
       )}
     </div>
