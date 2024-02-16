@@ -117,7 +117,7 @@ export default function InterestList() {
         <button
           onClick={handleAddPreferences}
           disabled={isLoading}
-          className="btn w-20 mb-8"
+          className="flex justify-center items-center btn w-20 mb-8"
         >
           {isLoading ? <Spinner /> : "Done"}
         </button>
