@@ -1,7 +1,7 @@
 import BlogList from "../components/BlogList";
 import Spinner from "../components/Spinner";
 import BlogHeader from "../components/BlogHeader";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../redux/hooks";
 

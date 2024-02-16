@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoClose, IoSearch } from "react-icons/io5";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { TiThMenuOutline } from "react-icons/ti";
 import { useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
+import { logout } from "../redux/slices/auth-slice";
 
 export default function Header() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const transitions = useTransition(openDrawer, {
     from: { opacity: 0, transform: "translateX(100%)" },
@@ -18,6 +21,11 @@ export default function Header() {
   // Function to handle link click and close the drawer
   const handleLinkClick = () => {
     setOpenDrawer(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -40,7 +48,9 @@ export default function Header() {
           <Link to="/feed">Your Feed</Link>
           <Link to="/">Contact Us</Link>
           {isAuthenticated ? (
-            <button className="btn w-20">Logout</button>
+            <button onClick={handleLogout} className="btn w-20">
+              Logout
+            </button>
           ) : (
             <button className="btn w-20">
               <Link to="/auth/login">Login</Link>
@@ -90,7 +100,7 @@ export default function Header() {
                   Contact Us
                 </Link>
                 {isAuthenticated ? (
-                  <button onClick={handleLinkClick} className="btn w-20">
+                  <button onClick={handleLogout} className="btn w-20">
                     Logout
                   </button>
                 ) : (
