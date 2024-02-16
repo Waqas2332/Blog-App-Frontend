@@ -25,12 +25,14 @@ export default function Header() {
       <nav className="w-[90%] flex justify-between items-center m-auto p-4">
         <div className="flex gap-6">
           <div className="text-2xl font-headingFont">InsightfulPages</div>
-          <div className="bg-white w-[300px] rounded-md pe-3 max-[1050px]:hidden">
-            <div className="flex gap-2 ps-2 justify-center h-8 items-center">
-              <IoSearch />
-              <input className="outline-none w-[100%]" />
+          {isAuthenticated && (
+            <div className="bg-white w-[300px] rounded-md pe-3 max-[1050px]:hidden">
+              <div className="flex gap-2 ps-2 justify-center h-8 items-center">
+                <IoSearch />
+                <input className="outline-none w-[100%]" />
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="space-x-4 font-bodyFont max-[760px]:hidden">
           <Link to="/">Home</Link>
