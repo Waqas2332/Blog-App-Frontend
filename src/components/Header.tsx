@@ -34,8 +34,8 @@ export default function Header() {
         </div>
         <div className="space-x-4 font-bodyFont max-[760px]:hidden">
           <Link to="/">Home</Link>
-          <Link to="/blog/add-blog">Blogs</Link>
-          <Link to="/">Categories</Link>
+          <Link to="/blog/add-blog">Add Blog</Link>
+          <Link to="/feed">Your Feed</Link>
           <Link to="/">Contact Us</Link>
           {isAuthenticated ? (
             <button className="btn w-20">Logout</button>
@@ -79,10 +79,10 @@ export default function Header() {
                   onClick={handleLinkClick}
                   className="block"
                 >
-                  Blogs
+                  Add Blog
                 </Link>
-                <Link to="/" onClick={handleLinkClick} className="block">
-                  Categories
+                <Link to="/feed" onClick={handleLinkClick} className="block">
+                  Your Feed
                 </Link>
                 <Link to="/" onClick={handleLinkClick} className="block">
                   Contact Us

@@ -8,6 +8,7 @@ import UserInterest from "./pages/UserInterest";
 import Feed from "./pages/Feed";
 import { Toaster } from "sonner";
 import Blog from "./pages/Blog";
+import PrivateRoute from "./routes/PrivateRoute";
 
 export default function App() {
   return (
@@ -17,11 +18,19 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth/login" element={<Login />} />
-        <Route path="/blog/add-blog" element={<NewBlog />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route path="/welcome" element={<UserInterest />} />
-        <Route path="/feed" element={<Feed />} />
-        <Route path="/feed/:id" element={<Blog />} />
+        <Route path="/blog/add-blog" element={<PrivateRoute />}>
+          <Route index element={<NewBlog />} />
+        </Route>
+        <Route path="/welcome" element={<PrivateRoute />}>
+          <Route index element={<UserInterest />} />
+        </Route>
+        <Route path="/feed" element={<PrivateRoute />}>
+          <Route index element={<Feed />} />
+        </Route>
+        <Route path="/feed/:id" element={<PrivateRoute />}>
+          <Route index element={<Blog />} />
+        </Route>
       </Routes>
     </>
   );

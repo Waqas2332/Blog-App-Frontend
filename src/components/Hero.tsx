@@ -1,4 +1,14 @@
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
+
 export default function Hero() {
+  const navigate = useNavigate();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
+  function handleNavigate() {
+    const route = isAuthenticated ? "/feed" : "/auth/login";
+    navigate(route);
+  }
   return (
     <header className="hero flex flex-col justify-center font-bodyFont">
       <div className="w-[90%] m-auto">
@@ -11,7 +21,9 @@ export default function Hero() {
             Dive into Thoughtful Insights, Engaging Ideas, and Enlightening
             Perspectives on a Variety of Topics
           </p>
-          <button className="btn w-40 mt-6">Explore Now</button>
+          <button onClick={handleNavigate} className="btn w-40 mt-6">
+            Explore Now
+          </button>
         </div>
       </div>
     </header>
