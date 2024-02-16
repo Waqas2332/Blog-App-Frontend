@@ -27,10 +27,12 @@ export default function Feed() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [preference, setPreference] = useState(true);
   const [user, setUser] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const token = useAppSelector((state) => state.auth.user);
 
   const preferenceFetchBlogs = async (api: string) => {
     try {
+      setIsLoading(true);
       setBlogs([]);
       const response = await axios.get(api, {
         headers: {
@@ -41,6 +43,8 @@ export default function Feed() {
       setPreference(response.data.preferences);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -57,7 +61,13 @@ export default function Feed() {
         user={user}
         setUser={setUser}
       />
-      {blogs.length == 0 ? <Spinner /> : <BlogList blogs={blogs} />}
+      {isLoading ? (
+        <Spinner />
+      ) : blogs.length > 0 ? (
+        <BlogList blogs={blogs} />
+      ) : (
+        <p>No Blogs Found</p>
+      )}
     </section>
   );
 }

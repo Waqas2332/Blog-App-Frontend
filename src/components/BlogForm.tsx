@@ -35,7 +35,7 @@ export default function BlogForm() {
   }
 
   return (
-    <div className="flex flex-col mt-20 justify-center items-center">
+    <div className="flex w-[90%] m-auto flex-col mt-20 justify-center items-center">
       <div>
         <ReactQuill
           theme="snow"

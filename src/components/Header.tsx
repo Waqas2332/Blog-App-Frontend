@@ -24,6 +24,7 @@ export default function Header() {
   };
 
   const handleLogout = () => {
+    handleLinkClick();
     dispatch(logout());
     navigate("/");
   };
